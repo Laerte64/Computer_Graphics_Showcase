@@ -1,9 +1,6 @@
-#include "new_cube.hpp"
-#include "bezier.hpp"
-#include <iostream>
+#include "graphics.hpp"
 
 int main() {
-    Graphics t;
-    t();
+    Graphics()();
     return 0;
 }
