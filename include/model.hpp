@@ -6,6 +6,8 @@ class Model;
 #include <optional>
 #include "edge.hpp"
 
+class Graphics;
+
 class Model {
 public:
     std::vector<std::optional<Vec>> points;
@@ -13,7 +15,11 @@ public:
 
     Model();
     unsigned short addPoint(Vec point);
-    void draw(Graphics& graphics, void (*algorithm)(Graphics& graphics, Vec p1, Vec p2, SDL_Color color)) const;
+    void removePoint(int id);
+    void draw(Graphics& graphics) const;
     Vec mid_point() const;
-    void homogenous_tranf(Matrix transf);
+    void transform(Vec pivot, Matrix transf);
+
+    static void cube(Model& model);
+    static void pyramid(Model& model);
 };

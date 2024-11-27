@@ -1,7 +1,9 @@
 #include "new_cube.hpp"
+#include "bezier.hpp"
+#include <iostream>
 
 int main() {
-    _CubeTest t;
+    Graphics t;
     t();
     return 0;
 }

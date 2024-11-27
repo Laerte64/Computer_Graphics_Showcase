@@ -6,6 +6,7 @@
 
 class Clipping {
 public:
+    static std::pair<Vec, Vec> corners;
     static std::optional<std::pair<Vec, Vec>> clip(const Vec& p1, const Vec& p2);
 
 private:
@@ -19,6 +20,8 @@ private:
         Far     = 0b100000
     };
 
-    static int clipReg(const Vec& p);
+    static std::optional<std::pair<Vec, Vec>> clipX(const Vec& p1, const Vec& p2);
+    static std::optional<std::pair<Vec, Vec>> clipY(const Vec& p1, const Vec& p2);
+    static std::optional<std::pair<Vec, Vec>> clipZ(const Vec& p1, const Vec& p2);
     static Vec clipSide(const Vec& p1, const Vec& p2, Side side);
 };

@@ -2,10 +2,14 @@
 
 #include <SDL2/SDL_opengl.h>
 #include "edge.hpp"
-#include <iostream>
 #include "viewport.hpp"
+#include "circle.hpp"
 
-_CubeTest::_CubeTest() : Graphics(), circle(Vec(0, 0, 0), 1, camera.orientation) {
+#include <iostream>
+
+_CubeTest::_CubeTest() : Graphics(), circle(Vec(0, 0, 0), 1, std::nullopt, {200, 150, 100}) {
+    models.emplace_back(std::make_unique<Model>());
+    Model& cube = *models[models.size() - 1];
     cube.addPoint({-0.5f, -0.5f, -0.5f});
     cube.addPoint({ 0.5f, -0.5f, -0.5f});
     cube.addPoint({ 0.5f,  0.5f, -0.5f});
@@ -21,19 +25,29 @@ _CubeTest::_CubeTest() : Graphics(), circle(Vec(0, 0, 0), 1, camera.orientation)
     }};
     for (auto edge : edges)
         cube.edges.emplace_back(&cube, edge.first, edge.second);
-    
+
+    {
+        models.emplace_back(std::make_unique<Model>());
+            Model& m = *models[models.size() - 1]; 
+            m.addPoint(Vec(0, 0, 0));
+            m.addPoint(Vec(0, 1, 1));
+            m.edges.emplace_back(&m, 0, 1);
+    }
 }
-#include "circle.hpp"
+
+void _CubeTest::input(SDL_Event event) {
+    
+};
+
+#include "b_spline.hpp"
 void _CubeTest::update() {
     circle.draw(*this);
-    circle.direction.value() *= Matrix::rotateY(0.005);
-    circle.direction.value() *= Matrix::rotateZ(0.01);
 
-    cube.homogenous_tranf(Matrix::rotateY(0.002));
-    cube.homogenous_tranf(Matrix::rotateX(0.001));
-    cube.draw(*this, Edge::Bresenham);
+    auto b = BSpline({Vec(-1, 0, 0), Vec(0, 1, 0), Vec(0, -1, 0), Vec(0, 0, 1)}, {200, 150, 100});
+    b.control({255, 100, 50}).draw(*this);
+    b.by_matrix(30).draw(*this);    
 }
 
 _CubeTest::~_CubeTest() {
-
+    
 }

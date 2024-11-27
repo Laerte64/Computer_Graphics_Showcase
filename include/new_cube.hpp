@@ -12,7 +12,7 @@ public:
     ~_CubeTest();
 
 private:
-    Model cube;
     Circle circle;
+    void input(SDL_Event event) override;
     void update() override;
 };

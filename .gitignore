@@ -1,5 +1,5 @@
 imgui.ini
 program
-requirements.txt
+*.txt
 build
 .vscode
